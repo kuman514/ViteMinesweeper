@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Tile from '^/components/atoms/Tile';
 
 const Root = styled.div`
   box-sizing: border-box;
@@ -14,7 +15,11 @@ const Root = styled.div`
 
 function Main() {
   return (
-    <Root>Hello!</Root>
+    <Root>
+      <Tile />
+      <Tile />
+      <Tile />
+    </Root>
   );
 }
 
