@@ -19,22 +19,22 @@ const Root = styled.button`
   all: unset;
 
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
 
-  background: url(${TilePng});
+  background-image: url(${TilePng});
   background-size: 100% 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   cursor: pointer;
 
   &:hover {
-    background: url(${TileHoverPng});
-    background-size: 100% 100%;
+    background-image: url(${TileHoverPng});
   }
 
   &:disabled {
-    background: url(${TileDisabledPng});
-    background-size: 100% 100%;
+    background-image: url(${TileDisabledPng});
   }
 `;
 

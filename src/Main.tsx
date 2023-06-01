@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Tile from '^/components/atoms/Tile';
+import BoardContainer from './components/atoms/BoardContainer';
+import ContextImage from './components/atoms/ContextImage';
 
 import Around1Png from '^/assets/tile-context/1.png';
 import Around2Png from '^/assets/tile-context/2.png';
@@ -15,8 +18,8 @@ import MinePng from '^/assets/tile-context/mine.png';
 
 const Root = styled.div`
   box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
+  width: 100vmin;
+  height: 100vmin;
 
   display: flex;
   flex-wrap: wrap;
@@ -25,55 +28,42 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const BoardContainer = styled.div`
-  width: 100vmin;
-  height: 100vmin;
-
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-const ContextImage = styled.img`
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-`;
+const tmpImgSrcs = [
+  undefined,
+  Around1Png,
+  Around2Png,
+  Around3Png,
+  Around4Png,
+  Around5Png,
+  Around6Png,
+  Around7Png,
+  Around8Png,
+  MarkPng,
+  MinePng,
+];
 
 function Main() {
   return (
     <Root>
       <BoardContainer>
-        <Tile>
-          <ContextImage src={Around1Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around2Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around3Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around4Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around5Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around6Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around7Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={Around8Png} />
-        </Tile>
-        <Tile>
-          <ContextImage src={MarkPng} />
-        </Tile>
-        <Tile>
-          <ContextImage src={MinePng} />
-        </Tile>
+        {
+          (() => {
+            const tmpRenders = [];
+            for (let i = 0; i < 9; i++) {
+              for (let j = 0; j < 9; j++) {
+                const imgUrl = tmpImgSrcs[(9 * i + j) % tmpImgSrcs.length];
+                tmpRenders.push(
+                  <Tile key={`${i}${j}`}>
+                    {
+                      imgUrl && <ContextImage src={imgUrl} />
+                    }
+                  </Tile>,
+                );
+              }
+            }
+            return tmpRenders;
+          })()
+        }
       </BoardContainer>
     </Root>
   );
