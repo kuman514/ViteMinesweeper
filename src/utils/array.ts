@@ -7,3 +7,7 @@ export function generateInitStateArray<T>(width: number, height: number, fill: T
     ),
   );
 }
+
+export function deepCopyStateArray<T>(array: T[][]): T[][] {
+  return JSON.parse(JSON.stringify(array));
+}
