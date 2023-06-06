@@ -3,6 +3,8 @@ import { GameStoreState } from '^/types';
 import { generateInitStateArray } from '^/utils/array';
 import { generateRandomInteger } from '^/utils/random';
 
+import { handleOnClick } from './handleOnClick';
+
 interface Parameter {
   gameStoreState: GameStoreState;
   row: number;
@@ -56,15 +58,14 @@ export function handleOnInitClick({ gameStoreState, row, col }: Parameter): Game
     });
   });
 
-  /**
-   * @todo
-   * Implement handleOnClick first
-   */
-
-  return {
-    ...gameStoreState,
-    isMine: newIsMine,
-    mineAroundCount: newMineAroundCount,
-    isInit: false,
-  };
+  return handleOnClick({
+    gameStoreState: {
+      ...gameStoreState,
+      isMine: newIsMine,
+      mineAroundCount: newMineAroundCount,
+      isInit: false,
+    },
+    row,
+    col,
+  });
 }
