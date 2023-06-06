@@ -24,6 +24,10 @@ export function handleOnInitClick({ gameStoreState, row, col }: Parameter): Game
     return gameStoreState;
   }
 
+  /**
+   * @fixme
+   * Sometimes it generates duplicated coords
+   */
   const newIsMine = generateInitStateArray<boolean>(width, height, false);
   const maxRange = width * height - 1;
   const except = width * row + col;
