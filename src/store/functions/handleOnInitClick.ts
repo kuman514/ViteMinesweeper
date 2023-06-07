@@ -1,7 +1,7 @@
 import { direction8 } from '^/constants/direction';
 import { GameStoreState } from '^/types';
 import { generateInitStateArray } from '^/utils/array';
-import { generateRandomInteger } from '^/utils/random';
+import { generateRandomIntegerArray } from '^/utils/random';
 
 import { handleOnClick } from './handleOnClick';
 
@@ -24,17 +24,15 @@ export function handleOnInitClick({ gameStoreState, row, col }: Parameter): Game
     return gameStoreState;
   }
 
-  /**
-   * @fixme
-   * Sometimes it generates duplicated coords
-   */
   const newIsMine = generateInitStateArray<boolean>(width, height, false);
   const maxRange = width * height - 1;
   const except = width * row + col;
-  Array.from(
-    { length: mines },
-    () => generateRandomInteger(0, maxRange, except),
-  ).forEach((mineIndex) => {
+  generateRandomIntegerArray({
+    min: 0,
+    max: maxRange,
+    except,
+    quantity: mines,
+  }).forEach((mineIndex) => {
     const mineRow = Math.floor(mineIndex / width);
     const mineCol = mineIndex % width;
     newIsMine[mineRow][mineCol] = true;
