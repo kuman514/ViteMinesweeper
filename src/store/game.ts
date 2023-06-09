@@ -7,6 +7,7 @@ import { getInitState } from './functions/getInitState';
 import { handleOnResetGame } from './functions/handleOnResetGame';
 import { handleOnInitClick } from './functions/handleOnInitClick';
 import { handleOnClick } from './functions/handleOnClick';
+import { handleOnRightClick } from './functions/handleOnRightClick';
 
 export const useGameStore = create<GameStore>()(
   devtools(
@@ -28,6 +29,10 @@ export const useGameStore = create<GameStore>()(
         click: (row: number, col: number) => set((gameStore) => ({
           ...gameStore,
           ...handleOnClick({ gameStoreState: gameStore, row, col }),
+        })),
+        rightClick: (row: number, col: number) => set((gameStore) => ({
+          ...gameStore,
+          ...handleOnRightClick({ gameStoreState: gameStore, row, col }),
         })),
       }),
       {
