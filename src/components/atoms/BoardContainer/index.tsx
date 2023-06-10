@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
+import { useGameStore } from '^/store/game';
+
 interface RootProps {
   width: number;
   height: number;
@@ -20,8 +22,11 @@ interface Props {
 }
 
 function BoardContainer({ children }: Props) {
+  const width = useGameStore((state) => state.width);
+  const height = useGameStore((state) => state.height);
+
   return (
-    <Root width={9} height={9}>
+    <Root width={width} height={height}>
       {children}
     </Root>
   );
