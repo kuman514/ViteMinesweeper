@@ -106,7 +106,10 @@ function Tile({ row, col }: Props) {
     <Root
       disabled={isDisabled}
       onClick={handleOnClick}
-      onContextMenu={handleOnRightClick}
+      onContextMenu={(event) => {
+        event.preventDefault();
+        handleOnRightClick();
+      }}
     >
       {contextImgSrc ? <ContextImage src={contextImgSrc} /> : null}
     </Root>
