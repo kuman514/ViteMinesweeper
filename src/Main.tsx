@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import UIButton from '^/components/atoms/UIButton';
 import Board from '^/components/molecules/Board';
+import { useGameStore } from '^/store/game';
 
 const Root = styled.div`
   box-sizing: border-box;
@@ -16,9 +18,18 @@ const Root = styled.div`
 `;
 
 function Main() {
+  const resetGame = useGameStore((state) => state.resetGame);
   return (
     <Root>
       <Board />
+      <UIButton
+        onClick={() => resetGame({
+          width: 30,
+          height: 16,
+          mines: 99,
+        })}
+        label="Reset"
+      />
     </Root>
   );
 }
