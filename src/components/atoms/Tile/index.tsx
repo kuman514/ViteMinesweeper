@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ContextImage from '^/components/atoms/ContextImage';
 import { useGameStore } from '^/store/game';
 
 import TilePng from '^/assets/tile/tile.png';
@@ -15,8 +16,8 @@ import Around6Png from '^/assets/tile-context/6.png';
 import Around7Png from '^/assets/tile-context/7.png';
 import Around8Png from '^/assets/tile-context/8.png';
 import MarkPng from '^/assets/tile-context/mark.png';
+import WrongMarkPng from '^/assets/tile-context/wrong-mark.png';
 import MinePng from '^/assets/tile-context/mine.png';
-import ContextImage from '../ContextImage';
 
 const pngUrl = [
   null,
@@ -87,9 +88,9 @@ function Tile({ row, col }: Props) {
       return MinePng;
     }
 
-    // if (!isContinuable && isMarkedAsMine && !isMine) {
-    //   return WrongMarkPng;
-    // }
+    if (!isContinuable && isMarkedAsMine && !isMine) {
+      return WrongMarkPng;
+    }
 
     if (isMarkedAsMine) {
       return MarkPng;
