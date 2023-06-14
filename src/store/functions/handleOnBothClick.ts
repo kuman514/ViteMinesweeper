@@ -9,10 +9,11 @@ interface Parameter {
   col: number;
 }
 
-export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStoreState {
+export function handleOnBothClick({ gameStoreState, row, col }: Parameter): GameStoreState {
   const {
     isContinuable,
     isVisited,
+    isInit,
     isMarkedAsMine,
     isMine,
     mineAroundCount,
@@ -20,8 +21,8 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
     height,
   } = gameStoreState;
 
-  // Check [row][col] clickable
-  if (!isContinuable || isMarkedAsMine[row][col] || isVisited[row][col]) {
+  // Check [row][col] un-clickable
+  if (!isInit || !isContinuable || isMarkedAsMine[row][col] || !isVisited[row][col]) {
     return gameStoreState;
   }
 
@@ -44,7 +45,27 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
    */
   // BFS-Propagate until meeting 1~8
   const next = new Queue<{ row: number; col: number }>();
-  next.push({ row, col });
+  direction8.forEach(({ row: rowDir, col: colDir }) => {
+    const nextRow = row + rowDir;
+    const nextCol = col + colDir;
+
+    if (
+      nextRow < 0
+      || nextRow >= height
+      || nextCol < 0
+      || nextCol >= width
+      || newIsVisited[nextRow][nextCol]
+      || isMine[nextRow][nextCol]
+    ) {
+      return;
+    }
+
+    next.push({
+      row: nextRow,
+      col: nextCol,
+    });
+  });
+
   while (next.getFront() !== null) {
     const current = next.pop();
     if (current === null) {
