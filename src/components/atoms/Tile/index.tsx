@@ -31,12 +31,16 @@ const pngUrl = [
   Around8Png,
 ];
 
-const Root = styled.button`
+interface RootProps {
+  isVisited: boolean;
+}
+
+const Root = styled.button<RootProps>`
   all: unset;
 
   box-sizing: border-box;
 
-  background-image: url(${TilePng});
+  background-image: url(${({ isVisited }) => (isVisited ? TileDisabledPng : TilePng)});
   background-size: 100% 100%;
 
   display: flex;
@@ -47,10 +51,6 @@ const Root = styled.button`
 
   &:hover {
     background-image: url(${TileHoverPng});
-  }
-
-  &:disabled {
-    background-image: url(${TileDisabledPng});
   }
 `;
 
@@ -82,6 +82,11 @@ function Tile({ row, col }: Props) {
     rightClick(row, col);
   };
 
+  const bothClick = useGameStore((state) => state.bothClick);
+  const handleOnBothClick = () => {
+    bothClick(row, col);
+  };
+
   const isDisabled = isVisited;
   const contextImgSrc = (() => {
     if (!isContinuable && isMine) {
@@ -105,11 +110,17 @@ function Tile({ row, col }: Props) {
 
   return (
     <Root
-      disabled={isDisabled}
+      isVisited={isDisabled}
       onClick={handleOnClick}
       onContextMenu={(event) => {
         event.preventDefault();
         handleOnRightClick();
+      }}
+      onMouseUp={(event) => {
+        event.preventDefault();
+        if (event.button === 1) {
+          handleOnBothClick();
+        }
       }}
     >
       {contextImgSrc ? <ContextImage src={contextImgSrc} /> : null}

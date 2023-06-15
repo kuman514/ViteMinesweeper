@@ -22,6 +22,7 @@ export interface GameStoreAction {
   initClick(row: number, col: number): void;
   click(row: number, col: number): void;
   rightClick(row: number, col: number): void;
+  bothClick(row: number, col: number): void;
 }
 
 export type GameStore = GameStoreState & GameStoreAction;

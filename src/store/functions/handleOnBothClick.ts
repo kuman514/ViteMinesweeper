@@ -9,6 +9,11 @@ interface Parameter {
   col: number;
 }
 
+/**
+ * @fixme
+ * Prevent wrong marks from disappearing
+ */
+
 export function handleOnBothClick({ gameStoreState, row, col }: Parameter): GameStoreState {
   const {
     isContinuable,
@@ -22,28 +27,19 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
   } = gameStoreState;
 
   // Check [row][col] un-clickable
-  if (!isInit || !isContinuable || isMarkedAsMine[row][col] || !isVisited[row][col]) {
+  if (isInit || !isContinuable || isMarkedAsMine[row][col] || !isVisited[row][col]) {
     return gameStoreState;
   }
 
   const newIsVisited = deepCopyStateArray<boolean>(isVisited);
   const newIsMarkedAsMine = deepCopyStateArray<boolean>(isMarkedAsMine);
 
-  // Check mine on [row][col]
-  if (isMine[row][col]) {
-    newIsVisited[row][col] = true;
-    return {
-      ...gameStoreState,
-      isVisited: newIsVisited,
-      isContinuable: false,
-    };
-  }
-
   /**
    * @todo
    * Move BFS to utility to avoid redundant logic
    */
   // BFS-Propagate until meeting 1~8
+  let marks = 0;
   const next = new Queue<{ row: number; col: number }>();
   direction8.forEach(({ row: rowDir, col: colDir }) => {
     const nextRow = row + rowDir;
@@ -55,8 +51,12 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
       || nextCol < 0
       || nextCol >= width
       || newIsVisited[nextRow][nextCol]
-      || isMine[nextRow][nextCol]
     ) {
+      return;
+    }
+
+    if (isMarkedAsMine[nextRow][nextCol]) {
+      marks++;
       return;
     }
 
@@ -66,6 +66,11 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     });
   });
 
+  if (marks !== mineAroundCount[row][col]) {
+    return gameStoreState;
+  }
+
+  let isMineTouched = false;
   while (next.getFront() !== null) {
     const current = next.pop();
     if (current === null) {
@@ -73,8 +78,12 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     }
 
     const { row: curRow, col: curCol } = current;
-    if (newIsVisited[curRow][curCol] || isMine[curRow][curCol]) {
+    if (newIsVisited[curRow][curCol]) {
       continue;
+    }
+
+    if (isMine[curRow][curCol]) {
+      isMineTouched = true;
     }
 
     newIsVisited[curRow][curCol] = true;
@@ -95,7 +104,6 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
         || nextCol < 0
         || nextCol >= width
         || newIsVisited[nextRow][nextCol]
-        || isMine[nextRow][nextCol]
       ) {
         return;
       }
@@ -111,5 +119,6 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     ...gameStoreState,
     isVisited: newIsVisited,
     isMarkedAsMine: newIsMarkedAsMine,
+    isContinuable: !isMineTouched,
   };
 }
