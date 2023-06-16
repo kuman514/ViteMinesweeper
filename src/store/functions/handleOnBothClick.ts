@@ -9,11 +9,6 @@ interface Parameter {
   col: number;
 }
 
-/**
- * @fixme
- * Prevent wrong marks from disappearing
- */
-
 export function handleOnBothClick({ gameStoreState, row, col }: Parameter): GameStoreState {
   const {
     isContinuable,
@@ -40,6 +35,7 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
    */
   // BFS-Propagate until meeting 1~8
   let marks = 0;
+  let isMineTouched = false;
   const next = new Queue<{ row: number; col: number }>();
   direction8.forEach(({ row: rowDir, col: colDir }) => {
     const nextRow = row + rowDir;
@@ -60,6 +56,10 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
       return;
     }
 
+    if (isMine[nextRow][nextCol]) {
+      isMineTouched = true;
+    }
+
     next.push({
       row: nextRow,
       col: nextCol,
@@ -70,7 +70,6 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     return gameStoreState;
   }
 
-  let isMineTouched = false;
   while (next.getFront() !== null) {
     const current = next.pop();
     if (current === null) {
@@ -82,12 +81,8 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
       continue;
     }
 
-    if (isMine[curRow][curCol]) {
-      isMineTouched = true;
-    }
-
     newIsVisited[curRow][curCol] = true;
-    if (newIsMarkedAsMine[curRow][curCol]) {
+    if (!isMineTouched && newIsMarkedAsMine[curRow][curCol]) {
       newIsMarkedAsMine[curRow][curCol] = false;
     }
     if (mineAroundCount[curRow][curCol] >= 1 && mineAroundCount[curRow][curCol] <= 8) {
