@@ -19,6 +19,7 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     mineAroundCount,
     width,
     height,
+    mines,
   } = gameStoreState;
 
   // Check [row][col] un-clickable
@@ -110,10 +111,33 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     });
   }
 
+  let remaining = 0;
+  if (!isMineTouched) {
+    newIsVisited.forEach((rowLine) => {
+      rowLine.forEach((isThisVisited) => {
+        if (!isThisVisited) {
+          remaining++;
+        }
+      });
+    });
+  }
+
+  const isCompleted = isMineTouched ? false : remaining === mines;
+  if (isCompleted) {
+    newIsVisited.forEach((rowLine, i) => {
+      rowLine.forEach((isThisVisited, j) => {
+        if (!isThisVisited) {
+          newIsMarkedAsMine[i][j] = true;
+        }
+      });
+    });
+  }
+
   return {
     ...gameStoreState,
     isVisited: newIsVisited,
     isMarkedAsMine: newIsMarkedAsMine,
-    isContinuable: !isMineTouched,
+    isContinuable: !isMineTouched && !isCompleted,
+    isCompleted,
   };
 }

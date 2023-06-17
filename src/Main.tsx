@@ -24,9 +24,9 @@ function Main() {
       <Board />
       <UIButton
         onClick={() => resetGame({
-          width: 30,
-          height: 16,
-          mines: 99,
+          width: 9,
+          height: 9,
+          mines: 10,
         })}
         label="Reset"
       />

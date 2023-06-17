@@ -66,6 +66,7 @@ function Tile({ row, col }: Props) {
   const isVisited = useGameStore((state) => state.isVisited[row][col]);
   const isMarkedAsMine = useGameStore((state) => state.isMarkedAsMine[row][col]);
   const isContinuable = useGameStore((state) => state.isContinuable);
+  const isCompleted = useGameStore((state) => state.isCompleted);
 
   const initClick = useGameStore((state) => state.initClick);
   const click = useGameStore((state) => state.click);
@@ -89,11 +90,11 @@ function Tile({ row, col }: Props) {
 
   const isDisabled = isVisited;
   const contextImgSrc = (() => {
-    if (!isContinuable && isMine) {
+    if (!isContinuable && !isCompleted && isMine) {
       return MinePng;
     }
 
-    if (!isContinuable && isMarkedAsMine && !isMine) {
+    if (!isContinuable && !isCompleted && isMarkedAsMine && !isMine) {
       return WrongMarkPng;
     }
 

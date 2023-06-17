@@ -13,5 +13,6 @@ export function getInitState({ width, height, mines }: GameConfig): GameStoreSta
     isMarkedAsMine: generateInitStateArray<boolean>(width, height, false),
     isInit: true,
     isContinuable: true,
+    isCompleted: false,
   };
 }

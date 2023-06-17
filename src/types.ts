@@ -15,6 +15,7 @@ export interface GameStoreState {
   isMarkedAsMine: boolean[][];
   isInit: boolean;
   isContinuable: boolean;
+  isCompleted: boolean;
 }
 
 export interface GameStoreAction {

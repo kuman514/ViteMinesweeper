@@ -18,6 +18,7 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
     mineAroundCount,
     width,
     height,
+    mines,
   } = gameStoreState;
 
   // Check [row][col] clickable
@@ -86,9 +87,30 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
     });
   }
 
+  let remaining = 0;
+  newIsVisited.forEach((rowLine) => {
+    rowLine.forEach((isThisVisited) => {
+      if (!isThisVisited) {
+        remaining++;
+      }
+    });
+  });
+
+  const isCompleted = remaining === mines;
+  if (isCompleted) {
+    newIsVisited.forEach((rowLine, i) => {
+      rowLine.forEach((isThisVisited, j) => {
+        if (!isThisVisited) {
+          newIsMarkedAsMine[i][j] = true;
+        }
+      });
+    });
+  }
+
   return {
     ...gameStoreState,
     isVisited: newIsVisited,
     isMarkedAsMine: newIsMarkedAsMine,
+    isCompleted,
   };
 }
