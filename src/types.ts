@@ -27,3 +27,15 @@ export interface GameStoreAction {
 }
 
 export type GameStore = GameStoreState & GameStoreAction;
+
+export interface ConfigStoreState {
+  gameConfig: GameConfig;
+  backgroundColor: string;
+}
+
+export interface ConfigStoreAction {
+  modifyGameConfig(newGameConfig: GameConfig): void;
+  modifyBackgroundColor(newBackgroundColor: string): void;
+}
+
+export type ConfigStore = ConfigStoreState & ConfigStoreAction;
