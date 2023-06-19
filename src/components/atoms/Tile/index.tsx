@@ -7,6 +7,7 @@ import { useGameStore } from '^/store/game';
 import TilePng from '^/assets/tile/tile.png';
 import TileHoverPng from '^/assets/tile/tile-hover.png';
 import TileDisabledPng from '^/assets/tile/tile-disabled.png';
+import TileMineTouchedPng from '^/assets/tile/tile-mine-touched.png';
 import Around1Png from '^/assets/tile-context/1.png';
 import Around2Png from '^/assets/tile-context/2.png';
 import Around3Png from '^/assets/tile-context/3.png';
@@ -33,6 +34,19 @@ const pngUrl = [
 
 interface RootProps {
   isVisited: boolean;
+  isMineTouched: boolean;
+}
+
+function getBackgroundImage({ isVisited, isMineTouched }: RootProps): string {
+  if (isMineTouched) {
+    return TileMineTouchedPng;
+  }
+
+  if (isVisited) {
+    return TileDisabledPng;
+  }
+
+  return TilePng;
 }
 
 const Root = styled.button<RootProps>`
@@ -40,7 +54,7 @@ const Root = styled.button<RootProps>`
 
   box-sizing: border-box;
 
-  background-image: url(${({ isVisited }) => (isVisited ? TileDisabledPng : TilePng)});
+  background-image: url(${(props) => getBackgroundImage(props)});
   background-size: 100% 100%;
 
   display: flex;
@@ -67,6 +81,7 @@ function Tile({ row, col }: Props) {
   const isMarkedAsMine = useGameStore((state) => state.isMarkedAsMine[row][col]);
   const isContinuable = useGameStore((state) => state.isContinuable);
   const isCompleted = useGameStore((state) => state.isCompleted);
+  const isMineTouched = !isContinuable && isVisited && isMine && !isMarkedAsMine;
 
   const initClick = useGameStore((state) => state.initClick);
   const click = useGameStore((state) => state.click);
@@ -90,16 +105,16 @@ function Tile({ row, col }: Props) {
 
   const isDisabled = isVisited;
   const contextImgSrc = (() => {
-    if (!isContinuable && !isCompleted && isMine) {
-      return MinePng;
-    }
-
     if (!isContinuable && !isCompleted && isMarkedAsMine && !isMine) {
       return WrongMarkPng;
     }
 
     if (isMarkedAsMine) {
       return MarkPng;
+    }
+
+    if (!isContinuable && !isCompleted && isMine) {
+      return MinePng;
     }
 
     if (!isVisited) {
@@ -112,6 +127,7 @@ function Tile({ row, col }: Props) {
   return (
     <Root
       isVisited={isDisabled}
+      isMineTouched={isMineTouched}
       onClick={handleOnClick}
       onContextMenu={(event) => {
         event.preventDefault();
