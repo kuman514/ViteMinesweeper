@@ -39,3 +39,18 @@ export interface ConfigStoreAction {
 }
 
 export type ConfigStore = ConfigStoreState & ConfigStoreAction;
+
+export enum ModalType {
+  OFF = 'off',
+  GAME_CONFIG = 'game-config',
+}
+
+export interface ModalStoreState {
+  modalType: ModalType;
+}
+
+export interface ModalStoreAction {
+  setModalType(newModalType: ModalType): void;
+}
+
+export type ModalStore = ModalStoreState & ModalStoreAction;
