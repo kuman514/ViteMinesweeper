@@ -3,11 +3,14 @@ import styled from 'styled-components';
 
 import ConfigPopup from '^/components/molecules/ConfigPopup';
 import UIButton from '^/components/atoms/UIButton';
+import { useModalStore } from '^/store/modal';
+import { ModalType } from '^/types';
 
 const Root = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
 
   box-sizing: border-box;
   width: 100vw;
@@ -44,26 +47,41 @@ const ChildHeader = styled.div`
   justify-content: space-between;
 `;
 
-interface Props {
-  isModalShown?: boolean;
-  onCloseClick?: () => void;
-}
+function ModalForPopups() {
+  const modalType = useModalStore((state) => state.modalType);
+  const setModalType = useModalStore((state) => state.setModalType);
 
-function ModalForPopups({ isModalShown, onCloseClick }: Props) {
-  return isModalShown ? (
+  const modalContent = (() => {
+    switch (modalType) {
+      case ModalType.GAME_CONFIG:
+        return <ConfigPopup />;
+      default:
+        return null;
+    }
+  })();
+
+  if (modalContent === null) {
+    return null;
+  }
+
+  function handleOnCloseClick() {
+    setModalType(ModalType.OFF);
+  }
+
+  return (
     <Root>
       <ChildContent>
         <ChildHeader>
           <div>Configuration</div>
           <UIButton
-            onClick={() => onCloseClick?.()}
+            onClick={() => handleOnCloseClick()}
             label="Close"
           />
         </ChildHeader>
-        <ConfigPopup />
+        {modalContent}
       </ChildContent>
     </Root>
-  ) : null;
+  );
 }
 
 export default ModalForPopups;

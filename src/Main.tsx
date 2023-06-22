@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Board from '^/components/molecules/Board';
 import ModalForPopups from '^/components/molecules/ModalForPopups';
-import UIButton from '^/components/atoms/UIButton';
-
-import { useGameStore } from '^/store/game';
-import { useConfigStore } from '^/store/config';
+import UIPanel from '^/components/molecules/UIPannel';
 
 const Root = styled.div`
   box-sizing: border-box;
@@ -21,25 +18,11 @@ const Root = styled.div`
 `;
 
 function Main() {
-  const resetGame = useGameStore((state) => state.resetGame);
-  const { width, height, mines } = useConfigStore((state) => state.gameConfig);
-  const [isModalShown, setIsModalShown] = useState<boolean>(false);
-
   return (
     <Root>
       <Board />
-      <UIButton
-        onClick={() => resetGame({ width, height, mines })}
-        label="Reset"
-      />
-      <UIButton
-        onClick={() => setIsModalShown(!isModalShown)}
-        label="Config"
-      />
-      <ModalForPopups
-        isModalShown={isModalShown}
-        onCloseClick={() => setIsModalShown(false)}
-      />
+      <UIPanel />
+      <ModalForPopups />
     </Root>
   );
 }
