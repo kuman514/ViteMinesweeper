@@ -6,6 +6,8 @@ import UIButton from '^/components/atoms/UIButton';
 import { useModalStore } from '^/store/modal';
 import { ModalType } from '^/types';
 
+import { text } from './text';
+
 const Root = styled.div`
   position: fixed;
   top: 0;
@@ -34,7 +36,7 @@ const ChildContent = styled.div`
   align-items: center;
 
   background-color: white;
-  padding: 5%;
+  padding: 3%;
   border-radius: 2.5%;
 `;
 
@@ -45,6 +47,11 @@ const ChildHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const ModalTitle = styled.span`
+  font-weight: 700;
+  font-size: 1.5rem;
 `;
 
 function ModalForPopups() {
@@ -72,7 +79,7 @@ function ModalForPopups() {
     <Root>
       <ChildContent>
         <ChildHeader>
-          <div>Configuration</div>
+          <ModalTitle>{text.title[modalType]}</ModalTitle>
           <UIButton
             onClick={() => handleOnCloseClick()}
             label="Close"

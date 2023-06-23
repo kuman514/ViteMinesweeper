@@ -11,6 +11,7 @@ const Root = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  row-gap: 0.5rem;
 `;
 
 function ConfigPopup() {
