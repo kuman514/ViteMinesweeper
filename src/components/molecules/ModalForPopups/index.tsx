@@ -52,6 +52,7 @@ const ChildHeader = styled.div`
 const ModalTitle = styled.span`
   font-weight: 700;
   font-size: 1.5rem;
+  margin-bottom: 0.8rem;
 `;
 
 function ModalForPopups() {

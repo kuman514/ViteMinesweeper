@@ -27,6 +27,15 @@ const Root = styled.div`
   row-gap: 0.5rem;
 `;
 
+const DifficultySelector = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+`;
+
 function ConfigPopup() {
   const resetGame = useGameStore((state) => state.resetGame);
   const { width, height, mines } = useConfigStore((state) => state.gameConfig);
@@ -35,6 +44,38 @@ function ConfigPopup() {
 
   return (
     <Root>
+      <DifficultySelector>
+        <UIButton
+          onClick={() => {
+            modifyGameConfig({
+              width: 9,
+              height: 9,
+              mines: 10,
+            });
+          }}
+          label="Normal"
+        />
+        <UIButton
+          onClick={() => {
+            modifyGameConfig({
+              width: 16,
+              height: 16,
+              mines: 40,
+            });
+          }}
+          label="Hard"
+        />
+        <UIButton
+          onClick={() => {
+            modifyGameConfig({
+              width: 30,
+              height: 16,
+              mines: 99,
+            });
+          }}
+          label="Expert"
+        />
+      </DifficultySelector>
       <UINumberSlider
         title="Width"
         value={width}
