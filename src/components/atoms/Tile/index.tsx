@@ -85,22 +85,27 @@ function Tile({ row, col }: Props) {
 
   const initClick = useGameStore((state) => state.initClick);
   const click = useGameStore((state) => state.click);
-  const handleOnClick = () => {
-    if (isInit) {
-      initClick(row, col);
-      return;
+  const rightClick = useGameStore((state) => state.rightClick);
+  const bothClick = useGameStore((state) => state.bothClick);
+
+  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    switch (event.buttons) {
+      case 0:
+        if (isInit) {
+          initClick(row, col);
+          return;
+        }
+        click(row, col);
+        break;
+      case 2:
+        bothClick(row, col);
+        break;
+      default:
     }
-    click(row, col);
   };
 
-  const rightClick = useGameStore((state) => state.rightClick);
   const handleOnRightClick = () => {
     rightClick(row, col);
-  };
-
-  const bothClick = useGameStore((state) => state.bothClick);
-  const handleOnBothClick = () => {
-    bothClick(row, col);
   };
 
   const isDisabled = isVisited;
@@ -132,12 +137,6 @@ function Tile({ row, col }: Props) {
       onContextMenu={(event) => {
         event.preventDefault();
         handleOnRightClick();
-      }}
-      onMouseUp={(event) => {
-        event.preventDefault();
-        if (event.button === 1) {
-          handleOnBothClick();
-        }
       }}
     >
       {contextImgSrc ? <ContextImage src={contextImgSrc} /> : null}
