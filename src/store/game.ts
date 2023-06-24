@@ -39,6 +39,10 @@ export const useGameStore = create<GameStore>()(
           ...gameStore,
           ...handleOnBothClick({ gameStoreState: gameStore, row, col }),
         })),
+        setCurrentBothHoldCoords: (row: number, col: number) => set((gameStore) => ({
+          ...gameStore,
+          currentBothHoldCoords: [row, col],
+        })),
       }),
       {
         name: 'vite-minesweeper-game-store',
