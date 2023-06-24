@@ -1,8 +1,19 @@
 import React, { ReactNode } from 'react';
+import styled from 'styled-components';
 
 import BoardContainer from '^/components/atoms/BoardContainer';
-import { useGameStore } from '^/store/game';
 import Tile from '^/components/atoms/Tile';
+
+import { useGameStore } from '^/store/game';
+
+const Root = styled.div`
+  width: 88vmin;
+  height: 88vmin;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function Board() {
   const width = useGameStore((state) => state.width);
@@ -16,9 +27,11 @@ function Board() {
   }
 
   return (
-    <BoardContainer>
-      {tiles}
-    </BoardContainer>
+    <Root>
+      <BoardContainer>
+        {tiles}
+      </BoardContainer>
+    </Root>
   );
 }
 

@@ -9,8 +9,8 @@ interface RootProps {
 }
 
 const Root = styled.div<RootProps>`
-  width: calc(80% / ${({ width, height }) => Math.max(width, height)} * ${({ width }) => width});
-  height: calc(80% / ${({ width, height }) => Math.max(width, height)} * ${({ height }) => height});
+  width: calc(100% / ${({ width, height }) => Math.max(width, height)} * ${({ width }) => width});
+  height: calc(100% / ${({ width, height }) => Math.max(width, height)} * ${({ height }) => height});
 
   display: grid;
   grid-template-columns: repeat(${({ width }) => width}, 1fr);

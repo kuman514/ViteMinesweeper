@@ -7,8 +7,8 @@ import UIPanel from '^/components/molecules/UIPannel';
 
 const Root = styled.div`
   box-sizing: border-box;
-  width: 100vmin;
-  height: 100vmin;
+  width: 100vw;
+  height: 100vh;
 
   display: flex;
   flex-wrap: wrap;
