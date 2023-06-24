@@ -32,6 +32,9 @@ module.exports = {
         'airbnb',
       ],
       rules: {
+        radix: [
+          'off',
+        ],
         indent: [
           'error',
           2,
