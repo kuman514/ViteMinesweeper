@@ -1,3 +1,11 @@
+import {
+  MIN_WIDTH,
+  MAX_WIDTH,
+  MIN_HEIGHT,
+  MAX_HEIGHT,
+  MIN_MINES,
+} from '^/constants/size';
+import { getMaxMines } from '^/utils/size';
 import { GameConfig } from '^/types';
 
 export function handleOnModifyGameConfig({
@@ -5,16 +13,16 @@ export function handleOnModifyGameConfig({
   height,
   mines,
 }: GameConfig): GameConfig {
-  const finalWidth = Math.max(9, Math.min(30, width));
-  const finalHeight = Math.max(9, Math.min(24, height));
+  const finalWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, width));
+  const finalHeight = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
   return {
     width: finalWidth,
     height: finalHeight,
     mines: Math.max(
-      10,
+      MIN_MINES,
       Math.min(
         mines,
-        Math.floor(finalWidth * finalHeight * 0.925),
+        getMaxMines(finalWidth, finalHeight),
       ),
     ),
   };
