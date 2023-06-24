@@ -5,6 +5,7 @@ const Root = styled.img`
   box-sizing: border-box;
   width: 64%;
   height: 64%;
+  pointer-events: none;
 `;
 
 interface Props {
