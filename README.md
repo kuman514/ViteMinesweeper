@@ -31,3 +31,6 @@ Vite + React + Zustand를 이용하여 만든 지뢰찾기 게임.
 
 # Tech docs
 - [마우스 양쪽 클릭을 감지하는 방법](https://github.com/kuman514/ViteMinesweeper/blob/main/docs/tech/both-mouse-button.md)
+
+# Updates
+- `Jun 25, 2023`: `v1.0.0` 초기 배포
