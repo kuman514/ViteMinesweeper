@@ -14,5 +14,6 @@ export function getInitState({ width, height, mines }: GameConfig): GameStoreSta
     isInit: true,
     isContinuable: true,
     isCompleted: false,
+    currentBothHoldCoords: [-2, -2],
   };
 }

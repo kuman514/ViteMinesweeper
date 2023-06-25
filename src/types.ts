@@ -16,6 +16,7 @@ export interface GameStoreState {
   isInit: boolean;
   isContinuable: boolean;
   isCompleted: boolean;
+  currentBothHoldCoords: [number, number];
 }
 
 export interface GameStoreAction {
@@ -24,6 +25,7 @@ export interface GameStoreAction {
   click(row: number, col: number): void;
   rightClick(row: number, col: number): void;
   bothClick(row: number, col: number): void;
+  setCurrentBothHoldCoords(row: number, col: number): void;
 }
 
 export type GameStore = GameStoreState & GameStoreAction;
