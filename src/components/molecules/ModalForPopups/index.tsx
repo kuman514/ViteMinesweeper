@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ConfigPopup from '^/components/molecules/ConfigPopup';
+import YouWinPopup from '^/components/molecules/YouWinPopup';
 import UIButton from '^/components/atoms/UIButton';
 import { useModalStore } from '^/store/modal';
 import { ModalType } from '^/types';
@@ -26,10 +27,6 @@ const Root = styled.div`
 `;
 
 const ChildContent = styled.div`
-  box-sizing: border-box;
-  width: 40vw;
-  height: 40vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,6 +44,7 @@ const ChildHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  column-gap: 2rem;
 `;
 
 const ModalTitle = styled.span`
@@ -63,6 +61,8 @@ function ModalForPopups() {
     switch (modalType) {
       case ModalType.GAME_CONFIG:
         return <ConfigPopup />;
+      case ModalType.YOU_WIN:
+        return <YouWinPopup />;
       default:
         return null;
     }

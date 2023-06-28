@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import Board from '^/components/molecules/Board';
 import ModalForPopups from '^/components/molecules/ModalForPopups';
 import UIPanel from '^/components/molecules/UIPannel';
+
+import { useGameStore } from '^/store/game';
+import { useModalStore } from '^/store/modal';
+import { ModalType } from '^/types';
 
 const Root = styled.div`
   box-sizing: border-box;
@@ -18,6 +22,15 @@ const Root = styled.div`
 `;
 
 function Main() {
+  const isCompleted = useGameStore((state) => state.isCompleted);
+  const setModalType = useModalStore((store) => store.setModalType);
+
+  useEffect(() => {
+    if (isCompleted) {
+      setModalType(ModalType.YOU_WIN);
+    }
+  }, [isCompleted]);
+
   return (
     <Root>
       <Board />
