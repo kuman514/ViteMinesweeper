@@ -77,7 +77,11 @@ function ModalForPopups() {
   }
 
   return (
-    <Root>
+    <Root
+      onContextMenu={(event) => {
+        event.preventDefault();
+      }}
+    >
       <ChildContent>
         <ChildHeader>
           <ModalTitle>{text.title[modalType]}</ModalTitle>
