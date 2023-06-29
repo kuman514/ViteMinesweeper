@@ -45,6 +45,7 @@ export type ConfigStore = ConfigStoreState & ConfigStoreAction;
 export enum ModalType {
   OFF = 'off',
   GAME_CONFIG = 'game-config',
+  YOU_WIN = 'you-win',
 }
 
 export interface ModalStoreState {
