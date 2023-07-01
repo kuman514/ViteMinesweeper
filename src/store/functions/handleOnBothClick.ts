@@ -9,7 +9,11 @@ interface Parameter {
   col: number;
 }
 
-export function handleOnBothClick({ gameStoreState, row, col }: Parameter): GameStoreState {
+export function handleOnBothClick({
+  gameStoreState,
+  row,
+  col,
+}: Parameter): GameStoreState {
   const {
     isContinuable,
     isVisited,
@@ -23,7 +27,12 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
   } = gameStoreState;
 
   // Check [row][col] un-clickable
-  if (isInit || !isContinuable || isMarkedAsMine[row][col] || !isVisited[row][col]) {
+  if (
+    isInit ||
+    !isContinuable ||
+    isMarkedAsMine[row][col] ||
+    !isVisited[row][col]
+  ) {
     return gameStoreState;
   }
 
@@ -43,11 +52,11 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     const nextCol = col + colDir;
 
     if (
-      nextRow < 0
-      || nextRow >= height
-      || nextCol < 0
-      || nextCol >= width
-      || newIsVisited[nextRow][nextCol]
+      nextRow < 0 ||
+      nextRow >= height ||
+      nextCol < 0 ||
+      nextCol >= width ||
+      newIsVisited[nextRow][nextCol]
     ) {
       return;
     }
@@ -86,7 +95,10 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
     if (!isMineTouched && newIsMarkedAsMine[curRow][curCol]) {
       newIsMarkedAsMine[curRow][curCol] = false;
     }
-    if (mineAroundCount[curRow][curCol] >= 1 && mineAroundCount[curRow][curCol] <= 8) {
+    if (
+      mineAroundCount[curRow][curCol] >= 1 &&
+      mineAroundCount[curRow][curCol] <= 8
+    ) {
       continue;
     }
 
@@ -95,11 +107,11 @@ export function handleOnBothClick({ gameStoreState, row, col }: Parameter): Game
       const nextCol = curCol + colDir;
 
       if (
-        nextRow < 0
-        || nextRow >= height
-        || nextCol < 0
-        || nextCol >= width
-        || newIsVisited[nextRow][nextCol]
+        nextRow < 0 ||
+        nextRow >= height ||
+        nextCol < 0 ||
+        nextCol >= width ||
+        newIsVisited[nextRow][nextCol]
       ) {
         return;
       }

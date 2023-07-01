@@ -9,7 +9,11 @@ interface Parameter {
   col: number;
 }
 
-export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStoreState {
+export function handleOnClick({
+  gameStoreState,
+  row,
+  col,
+}: Parameter): GameStoreState {
   const {
     isContinuable,
     isVisited,
@@ -61,7 +65,10 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
     if (newIsMarkedAsMine[curRow][curCol]) {
       newIsMarkedAsMine[curRow][curCol] = false;
     }
-    if (mineAroundCount[curRow][curCol] >= 1 && mineAroundCount[curRow][curCol] <= 8) {
+    if (
+      mineAroundCount[curRow][curCol] >= 1 &&
+      mineAroundCount[curRow][curCol] <= 8
+    ) {
       continue;
     }
 
@@ -70,12 +77,12 @@ export function handleOnClick({ gameStoreState, row, col }: Parameter): GameStor
       const nextCol = curCol + colDir;
 
       if (
-        nextRow < 0
-        || nextRow >= height
-        || nextCol < 0
-        || nextCol >= width
-        || newIsVisited[nextRow][nextCol]
-        || isMine[nextRow][nextCol]
+        nextRow < 0 ||
+        nextRow >= height ||
+        nextCol < 0 ||
+        nextCol >= width ||
+        newIsVisited[nextRow][nextCol] ||
+        isMine[nextRow][nextCol]
       ) {
         return;
       }

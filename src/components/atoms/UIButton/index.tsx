@@ -8,10 +8,7 @@ interface Props {
 
 function UIButton({ onClick, label }: Props) {
   return (
-    <Button
-      colorScheme="whatsapp"
-      onClick={onClick}
-    >
+    <Button colorScheme="whatsapp" onClick={onClick}>
       {label}
     </Button>
   );

@@ -1,4 +1,8 @@
-export function generateRandomInteger(min: number, max: number, except?: number): number {
+export function generateRandomInteger(
+  min: number,
+  max: number,
+  except?: number
+): number {
   const generatedInteger = Math.floor(Math.random() * (max - min + 1)) + min;
 
   return except !== undefined && generatedInteger === except
@@ -14,7 +18,10 @@ interface GenerateRandomIntegerArrayParams {
 }
 
 export function generateRandomIntegerArray({
-  min, max, quantity, except,
+  min,
+  max,
+  quantity,
+  except,
 }: GenerateRandomIntegerArrayParams): number[] {
   const isDuplicated: Record<number, true> = {};
   while (Object.keys(isDuplicated).length < quantity) {

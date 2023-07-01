@@ -76,21 +76,32 @@ interface Props {
 function Tile({ row, col }: Props) {
   const isInit = useGameStore((state) => state.isInit);
   const isMine = useGameStore((state) => state.isMine[row][col]);
-  const mineAroundCount = useGameStore((state) => state.mineAroundCount[row][col]);
+  const mineAroundCount = useGameStore(
+    (state) => state.mineAroundCount[row][col]
+  );
   const isVisited = useGameStore((state) => state.isVisited[row][col]);
-  const isMarkedAsMine = useGameStore((state) => state.isMarkedAsMine[row][col]);
+  const isMarkedAsMine = useGameStore(
+    (state) => state.isMarkedAsMine[row][col]
+  );
   const isContinuable = useGameStore((state) => state.isContinuable);
   const isCompleted = useGameStore((state) => state.isCompleted);
-  const [holdRow, holdCol] = useGameStore((state) => state.currentBothHoldCoords);
-  const isMineTouched = !isContinuable && isVisited && isMine && !isMarkedAsMine;
+  const [holdRow, holdCol] = useGameStore(
+    (state) => state.currentBothHoldCoords
+  );
+  const isMineTouched =
+    !isContinuable && isVisited && isMine && !isMarkedAsMine;
 
   const initClick = useGameStore((state) => state.initClick);
   const click = useGameStore((state) => state.click);
   const rightClick = useGameStore((state) => state.rightClick);
   const bothClick = useGameStore((state) => state.bothClick);
-  const setCurrentBothHoldCoords = useGameStore((state) => state.setCurrentBothHoldCoords);
+  const setCurrentBothHoldCoords = useGameStore(
+    (state) => state.setCurrentBothHoldCoords
+  );
 
-  const handleOnMouseDownOrOver = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOnMouseDownOrOver = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     switch (event.buttons) {
       case 3:
         setCurrentBothHoldCoords(row, col);
@@ -103,7 +114,9 @@ function Tile({ row, col }: Props) {
     setCurrentBothHoldCoords(-2, -2);
   };
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOnClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     switch (event.buttons) {
       case 0:
         if (isInit) {
@@ -123,10 +136,11 @@ function Tile({ row, col }: Props) {
     rightClick(row, col);
   };
 
-  const isHold = !isMarkedAsMine
-    && isContinuable
-    && Math.abs(row - holdRow) <= 1
-    && Math.abs(col - holdCol) <= 1;
+  const isHold =
+    !isMarkedAsMine &&
+    isContinuable &&
+    Math.abs(row - holdRow) <= 1 &&
+    Math.abs(col - holdCol) <= 1;
   const isDisabled = isVisited;
   const contextImgSrc = (() => {
     if (!isContinuable && !isCompleted && isMarkedAsMine && !isMine) {
