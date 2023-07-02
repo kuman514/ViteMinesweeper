@@ -28,9 +28,7 @@ function Board() {
 
   return (
     <Root>
-      <BoardContainer>
-        {tiles}
-      </BoardContainer>
+      <BoardContainer>{tiles}</BoardContainer>
     </Root>
   );
 }

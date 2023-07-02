@@ -13,7 +13,7 @@ interface Props {
 }
 
 function ContextImage({ src }: Props) {
-  return (<Root src={src} />);
+  return <Root src={src} />;
 }
 
 export default ContextImage;

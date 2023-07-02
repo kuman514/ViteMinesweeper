@@ -11,14 +11,12 @@ interface Parameter {
   col: number;
 }
 
-export function handleOnInitClick({ gameStoreState, row, col }: Parameter): GameStoreState {
-  const {
-    isInit,
-    isContinuable,
-    width,
-    height,
-    mines,
-  } = gameStoreState;
+export function handleOnInitClick({
+  gameStoreState,
+  row,
+  col,
+}: Parameter): GameStoreState {
+  const { isInit, isContinuable, width, height, mines } = gameStoreState;
 
   if (!isInit || !isContinuable) {
     return gameStoreState;
@@ -49,7 +47,12 @@ export function handleOnInitClick({ gameStoreState, row, col }: Parameter): Game
         const searchRow = i + rowDir;
         const searchCol = j + colDir;
 
-        if (searchRow < 0 || searchRow >= height || searchCol < 0 || searchCol >= width) {
+        if (
+          searchRow < 0 ||
+          searchRow >= height ||
+          searchCol < 0 ||
+          searchCol >= width
+        ) {
           return;
         }
 

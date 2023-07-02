@@ -14,18 +14,20 @@ export const useConfigStore = create<ConfigStore>()(
           mines: 10,
         },
         backgroundColor: 'white',
-        modifyGameConfig: (newGameConfig: GameConfig) => set((configStore) => ({
-          ...configStore,
-          gameConfig: handleOnModifyGameConfig(newGameConfig),
-        })),
-        modifyBackgroundColor: (newBackgroundColor: string) => set((configStore) => ({
-          ...configStore,
-          backgroundColor: newBackgroundColor,
-        })),
+        modifyGameConfig: (newGameConfig: GameConfig) =>
+          set((configStore) => ({
+            ...configStore,
+            gameConfig: handleOnModifyGameConfig(newGameConfig),
+          })),
+        modifyBackgroundColor: (newBackgroundColor: string) =>
+          set((configStore) => ({
+            ...configStore,
+            backgroundColor: newBackgroundColor,
+          })),
       }),
       {
         name: 'vite-minesweeper-config-store',
-      },
-    ),
-  ),
+      }
+    )
+  )
 );

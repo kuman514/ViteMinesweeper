@@ -1,6 +1,4 @@
-import {
-  beforeEach, describe, expect, it,
-} from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { useConfigStore } from './config';
 
 describe('Game config modification', () => {

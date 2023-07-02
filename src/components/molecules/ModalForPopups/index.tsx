@@ -85,10 +85,7 @@ function ModalForPopups() {
       <ChildContent>
         <ChildHeader>
           <ModalTitle>{text.title[modalType]}</ModalTitle>
-          <UIButton
-            onClick={() => handleOnCloseClick()}
-            label="Close"
-          />
+          <UIButton onClick={() => handleOnCloseClick()} label="Close" />
         </ChildHeader>
         {modalContent}
       </ChildContent>
