@@ -37,7 +37,11 @@ interface RootProps {
   isMineTouched: boolean;
 }
 
-function getBackgroundImage({ isVisited, isMineTouched }: RootProps): string {
+function getBackgroundUrl(
+  isVisited: boolean,
+  isMineTouched: boolean,
+  isHover: boolean
+): string {
   if (isMineTouched) {
     return TileMineTouchedPng;
   }
@@ -46,15 +50,29 @@ function getBackgroundImage({ isVisited, isMineTouched }: RootProps): string {
     return TileDisabledPng;
   }
 
-  return TilePng;
+  return isHover ? TileHoverPng : TilePng;
 }
 
+/**
+ * Currently, I can't stop ") expected ts-styled-plugin" when I write the url() code like
+ *
+ * background-image: url(${({ isVisited, isMineTouched }) =>
+ *   getBackgroundUrl(isVisited, isMineTouched, false)});
+ *
+ * even though it's auto-formatted by Prettier.
+ *
+ * This is why I remove ESLint's indent rule (conflicting with Prettier) and wrote the url() code like
+ *
+ * background-image: ${({ isVisited, isMineTouched }) =>
+ *   `url(${getBackgroundUrl(isVisited, isMineTouched, false)})`};
+ */
 const Root = styled.button<RootProps>`
   all: unset;
 
   box-sizing: border-box;
 
-  background-image: url(${(props) => getBackgroundImage(props)});
+  background-image: ${({ isVisited, isMineTouched }) =>
+    `url(${getBackgroundUrl(isVisited, isMineTouched, false)})`};
   background-size: 100% 100%;
 
   display: flex;
@@ -64,7 +82,8 @@ const Root = styled.button<RootProps>`
   cursor: pointer;
 
   &:hover {
-    background-image: url(${TileHoverPng});
+    background-image: ${({ isVisited, isMineTouched }) =>
+      `url(${getBackgroundUrl(isVisited, isMineTouched, true)})`};
   }
 `;
 
