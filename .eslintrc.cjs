@@ -37,11 +37,7 @@ module.exports = {
           'off',
         ],
         indent: [
-          'error',
-          2,
-          {
-            SwitchCase: 1,
-          },
+          'off',
         ],
         quotes: [
           'error',
