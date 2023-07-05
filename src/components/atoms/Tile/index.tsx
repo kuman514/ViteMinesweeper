@@ -37,7 +37,11 @@ interface RootProps {
   isMineTouched: boolean;
 }
 
-function getBackgroundImage({ isVisited, isMineTouched }: RootProps): string {
+function getBackgroundUrl(
+  isVisited: boolean,
+  isMineTouched: boolean,
+  isHover: boolean
+): string {
   if (isMineTouched) {
     return TileMineTouchedPng;
   }
@@ -46,15 +50,29 @@ function getBackgroundImage({ isVisited, isMineTouched }: RootProps): string {
     return TileDisabledPng;
   }
 
-  return TilePng;
+  return isHover ? TileHoverPng : TilePng;
 }
 
+/**
+ * Currently, I can't stop ") expected ts-styled-plugin" when I write the url() code like
+ *
+ * background-image: url(${({ isVisited, isMineTouched }) =>
+ *   getBackgroundUrl(isVisited, isMineTouched, false)});
+ *
+ * even though it's auto-formatted by Prettier.
+ *
+ * This is why I remove ESLint's indent rule (conflicting with Prettier) and wrote the url() code like
+ *
+ * background-image: ${({ isVisited, isMineTouched }) =>
+ *   `url(${getBackgroundUrl(isVisited, isMineTouched, false)})`};
+ */
 const Root = styled.button<RootProps>`
   all: unset;
 
   box-sizing: border-box;
 
-  background-image: url(${(props) => getBackgroundImage(props)});
+  background-image: ${({ isVisited, isMineTouched }) =>
+    `url(${getBackgroundUrl(isVisited, isMineTouched, false)})`};
   background-size: 100% 100%;
 
   display: flex;
@@ -64,7 +82,8 @@ const Root = styled.button<RootProps>`
   cursor: pointer;
 
   &:hover {
-    background-image: url(${TileHoverPng});
+    background-image: ${({ isVisited, isMineTouched }) =>
+      `url(${getBackgroundUrl(isVisited, isMineTouched, true)})`};
   }
 `;
 
@@ -76,21 +95,32 @@ interface Props {
 function Tile({ row, col }: Props) {
   const isInit = useGameStore((state) => state.isInit);
   const isMine = useGameStore((state) => state.isMine[row][col]);
-  const mineAroundCount = useGameStore((state) => state.mineAroundCount[row][col]);
+  const mineAroundCount = useGameStore(
+    (state) => state.mineAroundCount[row][col]
+  );
   const isVisited = useGameStore((state) => state.isVisited[row][col]);
-  const isMarkedAsMine = useGameStore((state) => state.isMarkedAsMine[row][col]);
+  const isMarkedAsMine = useGameStore(
+    (state) => state.isMarkedAsMine[row][col]
+  );
   const isContinuable = useGameStore((state) => state.isContinuable);
   const isCompleted = useGameStore((state) => state.isCompleted);
-  const [holdRow, holdCol] = useGameStore((state) => state.currentBothHoldCoords);
-  const isMineTouched = !isContinuable && isVisited && isMine && !isMarkedAsMine;
+  const [holdRow, holdCol] = useGameStore(
+    (state) => state.currentBothHoldCoords
+  );
+  const isMineTouched =
+    !isContinuable && isVisited && isMine && !isMarkedAsMine;
 
   const initClick = useGameStore((state) => state.initClick);
   const click = useGameStore((state) => state.click);
   const rightClick = useGameStore((state) => state.rightClick);
   const bothClick = useGameStore((state) => state.bothClick);
-  const setCurrentBothHoldCoords = useGameStore((state) => state.setCurrentBothHoldCoords);
+  const setCurrentBothHoldCoords = useGameStore(
+    (state) => state.setCurrentBothHoldCoords
+  );
 
-  const handleOnMouseDownOrOver = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOnMouseDownOrOver = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     switch (event.buttons) {
       case 3:
         setCurrentBothHoldCoords(row, col);
@@ -103,7 +133,9 @@ function Tile({ row, col }: Props) {
     setCurrentBothHoldCoords(-2, -2);
   };
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOnClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     switch (event.buttons) {
       case 0:
         if (isInit) {
@@ -123,10 +155,11 @@ function Tile({ row, col }: Props) {
     rightClick(row, col);
   };
 
-  const isHold = !isMarkedAsMine
-    && isContinuable
-    && Math.abs(row - holdRow) <= 1
-    && Math.abs(col - holdCol) <= 1;
+  const isHold =
+    !isMarkedAsMine &&
+    isContinuable &&
+    Math.abs(row - holdRow) <= 1 &&
+    Math.abs(col - holdCol) <= 1;
   const isDisabled = isVisited;
   const contextImgSrc = (() => {
     if (!isContinuable && !isCompleted && isMarkedAsMine && !isMine) {

@@ -20,10 +20,7 @@ export function handleOnModifyGameConfig({
     height: finalHeight,
     mines: Math.max(
       MIN_MINES,
-      Math.min(
-        mines,
-        getMaxMines(finalWidth, finalHeight),
-      ),
+      Math.min(mines, getMaxMines(finalWidth, finalHeight))
     ),
   };
 }

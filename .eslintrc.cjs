@@ -30,17 +30,14 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
         'airbnb',
+        'prettier',
       ],
       rules: {
         radix: [
           'off',
         ],
         indent: [
-          'error',
-          2,
-          {
-            SwitchCase: 1,
-          },
+          'off',
         ],
         quotes: [
           'error',

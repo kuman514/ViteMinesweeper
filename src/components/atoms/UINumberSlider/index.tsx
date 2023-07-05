@@ -23,18 +23,10 @@ interface Props {
   onChange(newValue: number): void;
 }
 
-function UINumberSlider({
-  title,
-  value,
-  minimum,
-  maximum,
-  onChange,
-}: Props) {
+function UINumberSlider({ title, value, minimum, maximum, onChange }: Props) {
   return (
     <Root>
-      <TitleContainer>
-        {title}
-      </TitleContainer>
+      <TitleContainer>{title}</TitleContainer>
       <Slider
         flex="1"
         focusThumbOnChange={false}

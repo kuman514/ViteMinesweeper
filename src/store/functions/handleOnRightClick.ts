@@ -7,12 +7,12 @@ interface Parameter {
   col: number;
 }
 
-export function handleOnRightClick({ gameStoreState, row, col }: Parameter): GameStoreState {
-  const {
-    isContinuable,
-    isVisited,
-    isMarkedAsMine,
-  } = gameStoreState;
+export function handleOnRightClick({
+  gameStoreState,
+  row,
+  col,
+}: Parameter): GameStoreState {
+  const { isContinuable, isVisited, isMarkedAsMine } = gameStoreState;
 
   // Check [row][col] clickable
   if (!isContinuable || isVisited[row][col]) {

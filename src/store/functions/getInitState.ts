@@ -1,7 +1,11 @@
 import { GameConfig, GameStoreState } from '^/types';
 import { generateInitStateArray } from '^/utils/array';
 
-export function getInitState({ width, height, mines }: GameConfig): GameStoreState {
+export function getInitState({
+  width,
+  height,
+  mines,
+}: GameConfig): GameStoreState {
   return {
     width,
     height,
