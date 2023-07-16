@@ -92,7 +92,7 @@ describe('Game store state on init-click', () => {
   });
 });
 
-describe('Game store state about right-click', () => {
+describe('Game store state on right-click', () => {
   beforeEach(() => {
     useGameStore.getState().resetGame({
       width: WIDTH,
@@ -130,17 +130,29 @@ describe('Game store state about right-click', () => {
     })();
 
     rightClick(unvisitedRow, unvisitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(true);
+    expect(
+      useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]
+    ).toStrictEqual(true);
     rightClick(unvisitedRow, unvisitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(false);
+    expect(
+      useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]
+    ).toStrictEqual(false);
     rightClick(unvisitedRow, unvisitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(true);
+    expect(
+      useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]
+    ).toStrictEqual(true);
 
     rightClick(visitedRow, visitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
+    expect(
+      useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]
+    ).toStrictEqual(false);
     rightClick(visitedRow, visitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
+    expect(
+      useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]
+    ).toStrictEqual(false);
     rightClick(visitedRow, visitedCol);
-    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
+    expect(
+      useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]
+    ).toStrictEqual(false);
   });
 });
