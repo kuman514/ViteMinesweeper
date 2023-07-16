@@ -4,8 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-  ],
+  extends: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -14,18 +13,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   overrides: [
     {
       files: '**/*.+(ts|tsx)',
       parser: '@typescript-eslint/parser',
-      plugins: [
-        'react',
-        '@typescript-eslint',
-      ],
+      plugins: ['react', '@typescript-eslint', 'prettier'],
       extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
@@ -33,88 +26,46 @@ module.exports = {
         'prettier',
       ],
       rules: {
-        radix: [
-          'off',
-        ],
-        indent: [
-          'off',
-        ],
-        quotes: [
-          'error',
-          'single',
-        ],
-        semi: [
-          'error',
-          'always',
-        ],
-        'react/function-component-definition': [
-          'off',
-        ],
-        'react/jsx-filename-extension': [
-          'off',
-        ],
-        'linebreak-style': [
-          'off',
-        ],
-        'react/jsx-one-expression-per-line': [
-          'off',
-        ],
-        'react/button-has-type': [
-          'off',
-        ],
-        '@typescript-eslint/ban-types': [
-          'off',
-        ],
-        'import/no-unresolved': [
-          'off',
-        ],
-        'import/extensions': [
-          'off',
-        ],
-        'import/prefer-default-export': [
-          'off',
-        ],
-        'no-shadow': [
-          'off',
-        ],
-        '@typescript-eslint/no-shadow': [
-          'error',
-        ],
-        'no-unused-vars': [
-          'off',
-        ],
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-        ],
-        'react/require-default-props': [
-          'off',
-        ],
+        radix: ['off'],
+        indent: ['off'],
+        quotes: ['error', 'single'],
+        semi: ['error', 'always'],
+        'react/function-component-definition': ['off'],
+        'react/jsx-filename-extension': ['off'],
+        'linebreak-style': ['off'],
+        'react/jsx-one-expression-per-line': ['off'],
+        'react/button-has-type': ['off'],
+        '@typescript-eslint/ban-types': ['off'],
+        'import/no-unresolved': ['off'],
+        'import/extensions': ['off'],
+        'import/prefer-default-export': ['off'],
+        'no-shadow': ['off'],
+        '@typescript-eslint/no-shadow': ['error'],
+        'no-unused-vars': ['off'],
+        '@typescript-eslint/no-unused-vars': ['error'],
+        'react/require-default-props': ['off'],
         'func-style': [
           'error',
           'declaration',
           {
             allowArrowFunctions: true,
-          }
+          },
         ],
-        'func-names': [
-          'error',
-        ],
-        'no-case-declarations': [
-          'off',
-        ],
-        'no-plusplus': [
-          'off',
-        ],
-        'no-continue': [
-          'off',
-        ],
-        'react/jsx-props-no-spreading': [
-          'off',
-        ],
+        'func-names': ['error'],
+        'no-case-declarations': ['off'],
+        'no-plusplus': ['off'],
+        'no-continue': ['off'],
+        'react/jsx-props-no-spreading': ['off'],
         'import/no-extraneous-dependencies': [
           'error',
           {
             devDependencies: true,
+          },
+        ],
+        'prettier/prettier': [
+          'error',
+          {
+              endOfLine: 'auto',
           },
         ],
       },
