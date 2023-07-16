@@ -2,9 +2,14 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { useGameStore } from './game';
 import { direction8 } from '^/constants/direction';
 
-const WIDTH = 9;
-const HEIGHT = 9;
-const MINES = 10;
+/**
+ * To expect a result with the always updated values,
+ * I needed to use useGameStore.getState()
+ */
+
+const WIDTH = 30;
+const HEIGHT = 16;
+const MINES = 99;
 
 describe('Game store state on init-click', () => {
   beforeEach(() => {
@@ -84,5 +89,58 @@ describe('Game store state on init-click', () => {
         return mineCount === mines;
       })()
     ).toStrictEqual(true);
+  });
+});
+
+describe('Game store state about right-click', () => {
+  beforeEach(() => {
+    useGameStore.getState().resetGame({
+      width: WIDTH,
+      height: HEIGHT,
+      mines: MINES,
+    });
+    const row = Math.floor(Math.random() * HEIGHT);
+    const col = Math.floor(Math.random() * WIDTH);
+    useGameStore.getState().initClick(row, col);
+  });
+
+  it('should be a mine mark only on an unvisited tile on right-click', async () => {
+    const { isVisited, rightClick } = useGameStore.getState();
+
+    const [unvisitedRow, unvisitedCol] = (() => {
+      for (let i = 0; i < HEIGHT; i++) {
+        for (let j = 0; j < WIDTH; j++) {
+          if (!isVisited[i][j]) {
+            return [i, j];
+          }
+        }
+      }
+      throw new Error('There was no unvisited tile');
+    })();
+
+    const [visitedRow, visitedCol] = (() => {
+      for (let i = 0; i < HEIGHT; i++) {
+        for (let j = 0; j < WIDTH; j++) {
+          if (isVisited[i][j]) {
+            return [i, j];
+          }
+        }
+      }
+      throw new Error('There was no visited tile');
+    })();
+
+    rightClick(unvisitedRow, unvisitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(true);
+    rightClick(unvisitedRow, unvisitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(false);
+    rightClick(unvisitedRow, unvisitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[unvisitedRow][unvisitedCol]).toStrictEqual(true);
+
+    rightClick(visitedRow, visitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
+    rightClick(visitedRow, visitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
+    rightClick(visitedRow, visitedCol);
+    expect(useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]).toStrictEqual(false);
   });
 });
