@@ -8,18 +8,18 @@ interface RootProps {
   height: number;
 }
 
-function getCalcWidth({ width, height }: RootProps) {
-  return `calc(100% / ${Math.max(width, height)} * ${width})`;
+function getCalcWidth(width: number) {
+  return `calc(100% / 30 * ${width})`;
 }
 
-function getCalcHeight({ width, height }: RootProps) {
-  return `calc(100% / ${Math.max(width, height)} * ${height})`;
+function getCalcHeight(height: number) {
+  return `calc(100% / 30 * ${height})`;
 }
 
 const Root = styled.div<RootProps>`
   box-sizing: border-box;
-  width: ${(props) => getCalcWidth(props)};
-  height: ${(props) => getCalcHeight(props)};
+  width: ${({ width }) => getCalcWidth(width)};
+  height: ${({ height }) => getCalcHeight(height)};
 
   display: grid;
   grid-template-columns: repeat(${({ width }) => width}, 1fr);
