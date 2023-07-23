@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { useGameStore } from '^/store/game';
+import { GAME_BOARD_SIZE } from '^/constants/size';
 
 interface RootProps {
   width: number;
@@ -9,11 +10,11 @@ interface RootProps {
 }
 
 function getCalcWidth(width: number) {
-  return `calc(100% / 30 * ${width})`;
+  return `calc(${GAME_BOARD_SIZE} / 30 * ${width})`;
 }
 
 function getCalcHeight(height: number) {
-  return `calc(100% / 30 * ${height})`;
+  return `calc(${GAME_BOARD_SIZE} / 30 * ${height})`;
 }
 
 const Root = styled.div<RootProps>`
