@@ -32,8 +32,16 @@ Vite + React + Zustand를 이용하여 만든 지뢰찾기 게임.
 # Tech docs
 - [마우스 양쪽 클릭을 감지하는 방법](https://github.com/kuman514/ViteMinesweeper/blob/main/docs/tech/both-mouse-button.md)
 
+# Feedbacks
+- `Jul 23, 2023`: 게임 편의성 및 일관성 건의
+  - Normal/Hard 등 너비/높이의 값을 작게 할수록 마우스의 움직임을 더 크게 요구한다. 일관된 버튼 크기를 가질 수 있게 할 순 없을까? 즉, 윈도우 7 스타일이 아닌, 윈도우 XP 이전 스타일로.
+
 # Updates
 - `Jun 25, 2023`: `v1.0.0` 초기 배포
 - `Jun 30, 2023`: `v1.1.1`
   - 게임에서 승리 시 모달 팝업 추가
   - 모달 팝업 우클릭 시 컨텍스트 메뉴가 띄워지는 오류 수정
+- `Jul 05, 2023`: `v1.1.3`
+  - 이미 탐색한 타일에 hover 효과가 나오지 않게 수정
+- `Jul 25, 2023`: `v1.1.4`
+  - 동일 크기의 윈도우에 타일을 일관된 크기로 표시

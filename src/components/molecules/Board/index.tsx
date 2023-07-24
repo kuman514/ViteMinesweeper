@@ -5,10 +5,11 @@ import BoardContainer from '^/components/atoms/BoardContainer';
 import Tile from '^/components/atoms/Tile';
 
 import { useGameStore } from '^/store/game';
+import { GAME_AREA_PERCENTAGE } from '^/constants/size';
 
 const Root = styled.div`
-  width: 88vmin;
-  height: 88vmin;
+  width: ${GAME_AREA_PERCENTAGE + 2}vw;
+  height: ${GAME_AREA_PERCENTAGE + 2}vh;
 
   display: flex;
   justify-content: center;
