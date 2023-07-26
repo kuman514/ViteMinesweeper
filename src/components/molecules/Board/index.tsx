@@ -16,6 +16,11 @@ const Root = styled.div`
   align-items: center;
 `;
 
+const BoardWindow = styled.div`
+  background-color: #c3c3c3;
+  padding: 2vmin;
+`;
+
 function Board() {
   const width = useGameStore((state) => state.width);
   const height = useGameStore((state) => state.height);
@@ -29,7 +34,9 @@ function Board() {
 
   return (
     <Root>
-      <BoardContainer>{tiles}</BoardContainer>
+      <BoardWindow>
+        <BoardContainer>{tiles}</BoardContainer>
+      </BoardWindow>
     </Root>
   );
 }
