@@ -3,16 +3,18 @@ import styled from 'styled-components';
 
 import BoardContainer from '^/components/atoms/BoardContainer';
 import Tile from '^/components/atoms/Tile';
+import BoardHeaderButton from '^/components/atoms/BoardHeaderButton';
+import ContextImage from '^/components/atoms/ContextImage';
 
 import { useGameStore } from '^/store/game';
 import { useModalStore } from '^/store/modal';
 import { GAME_AREA_PERCENTAGE, GAME_BOARD_HEADER_SIZE } from '^/constants/size';
-import BoardHeaderButton from '^/components/atoms/BoardHeaderButton';
 import { ModalType } from '^/types';
 
 import ResetPng from '^/assets/board-header/reset.png';
+import ResetCompletePng from '^/assets/board-header/reset-complete.png';
+import ResetFailedPng from '^/assets/board-header/reset-failed.png';
 import ConfigPng from '^/assets/board-header/config.png';
-import ContextImage from '^/components/atoms/ContextImage';
 
 const Root = styled.div`
   width: ${GAME_AREA_PERCENTAGE + 2}vw;
@@ -57,6 +59,9 @@ function Board() {
   const width = useGameStore((state) => state.width);
   const height = useGameStore((state) => state.height);
   const mines = useGameStore((state) => state.mines);
+  const isContinuable = useGameStore((state) => state.isContinuable);
+  const isCompleted = useGameStore((state) => state.isCompleted);
+
   const resetGame = useGameStore((state) => state.resetGame);
   const setModalType = useModalStore((state) => state.setModalType);
 
@@ -67,6 +72,18 @@ function Board() {
     }
   }
 
+  const resetPngUrl = (() => {
+    if (isContinuable) {
+      return ResetPng;
+    }
+
+    if (isCompleted) {
+      return ResetCompletePng;
+    }
+
+    return ResetFailedPng;
+  })();
+
   return (
     <Root>
       <BoardWindow>
@@ -75,7 +92,7 @@ function Board() {
             <BoardHeaderButton
               onClick={() => resetGame({ width, height, mines })}
             >
-              <ContextImage src={ResetPng} />
+              <ContextImage src={resetPngUrl} />
             </BoardHeaderButton>
             <BoardHeaderButton
               onClick={() => setModalType(ModalType.GAME_CONFIG)}
