@@ -14,6 +14,10 @@ const Root = styled.button`
   height: 100%;
   aspect-ratio: 1;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
 
   &:hover {

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Board from '^/components/molecules/Board';
 import ModalForPopups from '^/components/molecules/ModalForPopups';
-import UIPanel from '^/components/molecules/UIPannel';
 
 import { useGameStore } from '^/store/game';
 import { useModalStore } from '^/store/modal';
@@ -34,7 +33,6 @@ function Main() {
   return (
     <Root>
       <Board />
-      <UIPanel />
       <ModalForPopups />
     </Root>
   );

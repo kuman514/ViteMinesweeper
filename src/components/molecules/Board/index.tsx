@@ -5,11 +5,18 @@ import BoardContainer from '^/components/atoms/BoardContainer';
 import Tile from '^/components/atoms/Tile';
 
 import { useGameStore } from '^/store/game';
-import { GAME_AREA_PERCENTAGE } from '^/constants/size';
+import { useModalStore } from '^/store/modal';
+import { GAME_AREA_PERCENTAGE, GAME_BOARD_HEADER_SIZE } from '^/constants/size';
+import BoardHeaderButton from '^/components/atoms/BoardHeaderButton';
+import { ModalType } from '^/types';
+
+import ResetPng from '^/assets/board-header/reset.png';
+import ConfigPng from '^/assets/board-header/config.png';
+import ContextImage from '^/components/atoms/ContextImage';
 
 const Root = styled.div`
   width: ${GAME_AREA_PERCENTAGE + 2}vw;
-  height: ${GAME_AREA_PERCENTAGE + 2}vh;
+  height: calc(${GAME_AREA_PERCENTAGE + 2}vh + ${GAME_BOARD_HEADER_SIZE});
 
   display: flex;
   justify-content: center;
@@ -18,12 +25,40 @@ const Root = styled.div`
 
 const BoardWindow = styled.div`
   background-color: #c3c3c3;
-  padding: 2vmin;
+  padding: 1vmin;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  row-gap: 1vmin;
+`;
+
+const BoardHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: ${GAME_BOARD_HEADER_SIZE};
+`;
+
+const BoardHeaderButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1vmin;
+  height: 100%;
 `;
 
 function Board() {
   const width = useGameStore((state) => state.width);
   const height = useGameStore((state) => state.height);
+  const mines = useGameStore((state) => state.mines);
+  const resetGame = useGameStore((state) => state.resetGame);
+  const setModalType = useModalStore((state) => state.setModalType);
 
   const tiles: ReactNode[] = [];
   for (let i = 0; i < height; i++) {
@@ -35,6 +70,20 @@ function Board() {
   return (
     <Root>
       <BoardWindow>
+        <BoardHeader>
+          <BoardHeaderButtonWrapper>
+            <BoardHeaderButton
+              onClick={() => resetGame({ width, height, mines })}
+            >
+              <ContextImage src={ResetPng} />
+            </BoardHeaderButton>
+            <BoardHeaderButton
+              onClick={() => setModalType(ModalType.GAME_CONFIG)}
+            >
+              <ContextImage src={ConfigPng} />
+            </BoardHeaderButton>
+          </BoardHeaderButtonWrapper>
+        </BoardHeader>
         <BoardContainer>{tiles}</BoardContainer>
       </BoardWindow>
     </Root>
