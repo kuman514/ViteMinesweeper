@@ -94,16 +94,16 @@ export function handleOnClick({
     });
   }
 
-  let remaining = 0;
+  let remainingTiles = 0;
   newIsVisited.forEach((rowLine) => {
     rowLine.forEach((isThisVisited) => {
       if (!isThisVisited) {
-        remaining++;
+        remainingTiles++;
       }
     });
   });
 
-  const isCompleted = remaining === mines;
+  const isCompleted = remainingTiles === mines;
   if (isCompleted) {
     newIsVisited.forEach((rowLine, i) => {
       rowLine.forEach((isThisVisited, j) => {
