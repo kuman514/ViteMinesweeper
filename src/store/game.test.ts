@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { useGameStore } from './game';
 import { direction8 } from '^/constants/direction';
-import { generateRandomIntegerArray } from '^/utils/random';
+import {
+  generateRandomInteger,
+  generateRandomIntegerArray,
+} from '^/utils/random';
 
 /**
  * To expect a result with the always updated values,
@@ -193,5 +196,36 @@ describe('Remaining mine counting on right-click', () => {
       useGameStore.getState().rightClick(mineRow, mineCol);
     });
     expect(useGameStore.getState().remainingMines).toStrictEqual(-2);
+  });
+
+  it('should be consistent with the number of the really remaining mine marks', async () => {
+    const endRange = WIDTH * HEIGHT;
+    const skipIndex = generateRandomInteger(0, endRange + 1);
+    for (let mineIndex = 0; mineIndex < endRange; mineIndex++) {
+      if (mineIndex === skipIndex) {
+        continue;
+      }
+      const mineRow = Math.floor(mineIndex / WIDTH);
+      const mineCol = mineIndex % WIDTH;
+      useGameStore.getState().rightClick(mineRow, mineCol);
+    }
+
+    const clickMineRow = Math.floor(skipIndex / WIDTH);
+    const clickMineCol = skipIndex % WIDTH;
+    useGameStore.getState().initClick(clickMineRow, clickMineCol);
+
+    let reallyRemainMarks = 0;
+    const { isMarkedAsMine } = useGameStore.getState();
+    for (let i = 0; i < HEIGHT; i++) {
+      for (let j = 0; j < WIDTH; j++) {
+        if (isMarkedAsMine[i][j]) {
+          reallyRemainMarks++;
+        }
+      }
+    }
+
+    expect(useGameStore.getState().remainingMines).toStrictEqual(
+      useGameStore.getState().mines - reallyRemainMarks
+    );
   });
 });
