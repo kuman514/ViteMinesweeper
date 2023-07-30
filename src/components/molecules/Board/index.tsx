@@ -41,9 +41,27 @@ const BoardHeader = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: ${GAME_BOARD_HEADER_SIZE};
+`;
+
+const BoardNumericDisplayWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 7vmin;
+  height: 100%;
+  background-color: black;
+  color: red;
+  font-weight: bolder;
+  font-size: 3vmin;
+  font-variant-numeric: tabular-nums;
+`;
+
+const SemanticEmpty = styled.div`
+  width: 7vmin;
 `;
 
 const BoardHeaderButtonWrapper = styled.div`
@@ -61,6 +79,7 @@ function Board() {
   const mines = useGameStore((state) => state.mines);
   const isContinuable = useGameStore((state) => state.isContinuable);
   const isCompleted = useGameStore((state) => state.isCompleted);
+  const remainingMines = useGameStore((state) => state.remainingMines);
 
   const resetGame = useGameStore((state) => state.resetGame);
   const setModalType = useModalStore((state) => state.setModalType);
@@ -88,6 +107,9 @@ function Board() {
     <Root>
       <BoardWindow>
         <BoardHeader>
+          <BoardNumericDisplayWrapper>
+            {remainingMines}
+          </BoardNumericDisplayWrapper>
           <BoardHeaderButtonWrapper>
             <BoardHeaderButton
               onClick={() => resetGame({ width, height, mines })}
@@ -100,6 +122,7 @@ function Board() {
               <ContextImage src={ConfigPng} />
             </BoardHeaderButton>
           </BoardHeaderButtonWrapper>
+          <SemanticEmpty />
         </BoardHeader>
         <BoardContainer>{tiles}</BoardContainer>
       </BoardWindow>
