@@ -12,7 +12,8 @@ export function handleOnRightClick({
   row,
   col,
 }: Parameter): GameStoreState {
-  const { isContinuable, isVisited, isMarkedAsMine } = gameStoreState;
+  const { isContinuable, isVisited, isMarkedAsMine, remainingMines } =
+    gameStoreState;
 
   // Check [row][col] clickable
   if (!isContinuable || isVisited[row][col]) {
@@ -21,9 +22,13 @@ export function handleOnRightClick({
 
   const newIsMarkedAsMine = deepCopyStateArray<boolean>(isMarkedAsMine);
   newIsMarkedAsMine[row][col] = !newIsMarkedAsMine[row][col];
+  const newRemainingMines = newIsMarkedAsMine[row][col]
+    ? remainingMines - 1
+    : remainingMines + 1;
 
   return {
     ...gameStoreState,
     isMarkedAsMine: newIsMarkedAsMine,
+    remainingMines: newRemainingMines,
   };
 }
