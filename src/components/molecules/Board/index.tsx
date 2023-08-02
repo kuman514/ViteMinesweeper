@@ -3,17 +3,30 @@ import styled from 'styled-components';
 
 import BoardContainer from '^/components/atoms/BoardContainer';
 import Tile from '^/components/atoms/Tile';
+import BoardHeader from '^/components/molecules/BoardHeader';
 
 import { useGameStore } from '^/store/game';
-import { GAME_AREA_PERCENTAGE } from '^/constants/size';
+import { GAME_AREA_PERCENTAGE, GAME_BOARD_HEADER_SIZE } from '^/constants/size';
 
 const Root = styled.div`
   width: ${GAME_AREA_PERCENTAGE + 2}vw;
-  height: ${GAME_AREA_PERCENTAGE + 2}vh;
+  height: calc(${GAME_AREA_PERCENTAGE + 2}vh + ${GAME_BOARD_HEADER_SIZE});
 
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const BoardWindow = styled.div`
+  background-color: #c3c3c3;
+  padding: 1vmin;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  row-gap: 1vmin;
 `;
 
 function Board() {
@@ -29,7 +42,10 @@ function Board() {
 
   return (
     <Root>
-      <BoardContainer>{tiles}</BoardContainer>
+      <BoardWindow>
+        <BoardHeader />
+        <BoardContainer>{tiles}</BoardContainer>
+      </BoardWindow>
     </Root>
   );
 }

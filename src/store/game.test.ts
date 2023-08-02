@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { useGameStore } from './game';
 import { direction8 } from '^/constants/direction';
+import {
+  generateRandomInteger,
+  generateRandomIntegerArray,
+} from '^/utils/random';
 
 /**
  * To expect a result with the always updated values,
@@ -154,5 +158,74 @@ describe('Game store state on right-click', () => {
     expect(
       useGameStore.getState().isMarkedAsMine[visitedRow][visitedCol]
     ).toStrictEqual(false);
+  });
+});
+
+describe('Remaining mine counting on right-click', () => {
+  beforeEach(() => {
+    useGameStore.getState().resetGame({
+      width: WIDTH,
+      height: HEIGHT,
+      mines: MINES,
+    });
+  });
+
+  it('should be 0 on right-click x distinct tiles while having total x mines', async () => {
+    const maxRange = WIDTH * HEIGHT - 1;
+    generateRandomIntegerArray({
+      min: 0,
+      max: maxRange,
+      quantity: MINES,
+    }).forEach((mineIndex) => {
+      const mineRow = Math.floor(mineIndex / WIDTH);
+      const mineCol = mineIndex % WIDTH;
+      useGameStore.getState().rightClick(mineRow, mineCol);
+    });
+    expect(useGameStore.getState().remainingMines).toStrictEqual(0);
+  });
+
+  it('should be lower than -2 on right-click (x + 2) distinct tiles while having total x mines', async () => {
+    const maxRange = WIDTH * HEIGHT - 1;
+    generateRandomIntegerArray({
+      min: 0,
+      max: maxRange,
+      quantity: MINES + 2,
+    }).forEach((mineIndex) => {
+      const mineRow = Math.floor(mineIndex / WIDTH);
+      const mineCol = mineIndex % WIDTH;
+      useGameStore.getState().rightClick(mineRow, mineCol);
+    });
+    expect(useGameStore.getState().remainingMines).toStrictEqual(-2);
+  });
+
+  it('should be consistent with the number of the really remaining mine marks', async () => {
+    const endRange = WIDTH * HEIGHT;
+    const skipIndex = generateRandomInteger(0, endRange + 1);
+    for (let mineIndex = 0; mineIndex < endRange; mineIndex++) {
+      if (mineIndex === skipIndex) {
+        continue;
+      }
+      const mineRow = Math.floor(mineIndex / WIDTH);
+      const mineCol = mineIndex % WIDTH;
+      useGameStore.getState().rightClick(mineRow, mineCol);
+    }
+
+    const clickMineRow = Math.floor(skipIndex / WIDTH);
+    const clickMineCol = skipIndex % WIDTH;
+    useGameStore.getState().initClick(clickMineRow, clickMineCol);
+
+    let reallyRemainMarks = 0;
+    const { isMarkedAsMine } = useGameStore.getState();
+    for (let i = 0; i < HEIGHT; i++) {
+      for (let j = 0; j < WIDTH; j++) {
+        if (isMarkedAsMine[i][j]) {
+          reallyRemainMarks++;
+        }
+      }
+    }
+
+    expect(useGameStore.getState().remainingMines).toStrictEqual(
+      useGameStore.getState().mines - reallyRemainMarks
+    );
   });
 });

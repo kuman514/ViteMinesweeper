@@ -24,6 +24,7 @@ export function handleOnBothClick({
     width,
     height,
     mines,
+    remainingMines,
   } = gameStoreState;
 
   // Check [row][col] un-clickable
@@ -38,6 +39,7 @@ export function handleOnBothClick({
 
   const newIsVisited = deepCopyStateArray<boolean>(isVisited);
   const newIsMarkedAsMine = deepCopyStateArray<boolean>(isMarkedAsMine);
+  let newRemainingMines = remainingMines;
 
   /**
    * @todo
@@ -94,6 +96,7 @@ export function handleOnBothClick({
     newIsVisited[curRow][curCol] = true;
     if (!isMineTouched && newIsMarkedAsMine[curRow][curCol]) {
       newIsMarkedAsMine[curRow][curCol] = false;
+      newRemainingMines++;
     }
     if (
       mineAroundCount[curRow][curCol] >= 1 &&
@@ -151,5 +154,6 @@ export function handleOnBothClick({
     isMarkedAsMine: newIsMarkedAsMine,
     isContinuable: !isMineTouched && !isCompleted,
     isCompleted,
+    remainingMines: newRemainingMines,
   };
 }
