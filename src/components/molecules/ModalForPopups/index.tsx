@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import ConfigPopup from '^/components/molecules/ConfigPopup';
 import YouWinPopup from '^/components/molecules/YouWinPopup';
-import UIButton from '^/components/atoms/UIButton';
+import { ReactComponent as CloseSvgRepoComSvg } from '^/assets/icons/close-svgrepo-com.svg';
 import { useModalStore } from '^/store/modal';
 import { ModalType } from '^/types';
 
@@ -53,6 +53,17 @@ const ModalTitle = styled.span`
   margin-bottom: 0.8rem;
 `;
 
+const CloseButton = styled.button`
+  all: unset;
+  cursor: pointer;
+  margin-bottom: 0.8rem;
+`;
+
+const CloseButtonIcon = styled(CloseSvgRepoComSvg)`
+  width: 1.5rem;
+  height: 1.5rem;
+`;
+
 function ModalForPopups() {
   const modalType = useModalStore((state) => state.modalType);
   const setModalType = useModalStore((state) => state.setModalType);
@@ -85,7 +96,9 @@ function ModalForPopups() {
       <ChildContent>
         <ChildHeader>
           <ModalTitle>{text.title[modalType]}</ModalTitle>
-          <UIButton onClick={() => handleOnCloseClick()} label="Close" />
+          <CloseButton onClick={() => handleOnCloseClick()}>
+            <CloseButtonIcon />
+          </CloseButton>
         </ChildHeader>
         {modalContent}
       </ChildContent>
