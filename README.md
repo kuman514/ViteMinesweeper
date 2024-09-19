@@ -3,9 +3,11 @@ Vite + React + Zustand를 이용하여 만든 지뢰찾기 게임.
 [앱 사용하기](https://vite-minesweeper.vercel.app/)
 
 # Objective
-- Microsoft Minesweeper의 규격을 따르는 지뢰찾기를 다운로드 없이 플레이하고 싶었음.
-  - [Google이 제공하는 지뢰찾기](https://www.google.com/search?q=%EC%A7%80%EB%A2%B0%EC%B0%BE%EA%B8%B0&oq=%EC%A7%80%EB%A2%B0%EC%B0%BE%EA%B8%B0&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGDvSAQc3MTZqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8)의 규격(너비와 높이 등등)은 이와 다름.
-- 알고리즘(너비 우선 탐색)을 활용한 구현 연습.
+- Windows 8 이후로 Microsoft Minesweeper는 기본 게임에서 제외되었습니다.
+  - 물론, Microsoft 스토어에서 지뢰찾기 게임을 다운받을 수 있으나, 불필요하게 화려한 그래픽과 광고 등등의 문제점을 안고 있습니다.
+- 이러한 이유로 Microsoft Minesweeper의 규격을 따르는 지뢰찾기를 다운로드 없이 플레이하고 싶었습니다.
+  - [Google이 제공하는 지뢰찾기](https://www.google.com/search?q=%EC%A7%80%EB%A2%B0%EC%B0%BE%EA%B8%B0&oq=%EC%A7%80%EB%A2%B0%EC%B0%BE%EA%B8%B0&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGDvSAQc3MTZqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8)의 규격(너비와 높이 등등)은 이와 달라 아쉬움을 느꼈습니다.
+- 알고리즘(너비 우선 탐색)을 활용하여 앱을 만들어보고 싶었습니다.
 
 # How to play
 - 게임의 룰은 Microsoft Windows 7까지의 기본 게임이었던 Microsoft Minesweeper의 룰을 지향하고 있습니다.
